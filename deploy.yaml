@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8s-list-headers
+  name: k8s-list-headers
+  namespace: k8s-list-headers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-list-headers
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: k8s-list-headers
+    spec:
+      containers:
+      - image: mendhak/http-https-echo:26
+        imagePullPolicy: IfNotPresent
+        name: k8s-list-headers
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 200m
+            memory: 512M
+          requests:
+            cpu: 100m
+            memory: 128M
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File

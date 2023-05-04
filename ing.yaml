@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  labels:
+    provider: k8s-list-headers
+  name: k8s-list-headers-ingress
+  namespace: k8s-list-headers
+spec:
+  rules:
+  - host: k8s-list-headers.imagination.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: k8s-list-headers
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - k8s-list-headers.imagination.dev
+    secretName: k8s-list-headers-cert

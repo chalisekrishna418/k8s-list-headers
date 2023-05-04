@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-list-headers
+  namespace: k8s-list-headers
+spec:
+  ports:
+  - name: k8s-list-headers-http
+    nodePort: 30070
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: k8s-list-headers
+  type: LoadBalancer
